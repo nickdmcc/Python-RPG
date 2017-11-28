@@ -1,8 +1,0 @@
-			LeaveForestRoom	
-	FindGoldRoom EmptyForestPath WaspRoom	
-		EmptyForestPath		
-		EmptyForestPath		
-WaspRoom EmptyForestPath StartingRoom EmptyForestPath FindDaggerRoom
-		FindGoldRoom		
-		EmptyForestPath		
-		MantisRoom		
