@@ -3,7 +3,7 @@ starting_position = (0, 0)
 
 def load_tiles():
 	"""Parses a file that describes the world space into the _world object"""
-	with open("C:\\Users\\Bertram\\Desktop\\Text_Adventure_Tutorial\\resources\\map.txt", 'r') as f:
+	with open("C:\\Users\\Nick\\Desktop\\Projects\\Python-RPG\\Text_Adventure_Tutorial\\resources\\map.txt", 'r') as f:
 		rows = f.readlines()
 	x_max = len(rows[0].split('\t')) #Assumes the rest of the rows have the same number of tabs.
 	for y in range(len(rows)):

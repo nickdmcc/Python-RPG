@@ -13,6 +13,7 @@ class Player():
 		
 	def print_inventory(self):
 		for item in self.inventory:
+			print("_____________________________________________")
 			print(item, '\n')
 			
 	def move(self, dx, dy):
@@ -44,10 +45,10 @@ class Player():
 		print("You use {} against {}!".format(best_weapon, enemy.name))
 		enemy.hp -= best_weapon.damage
 		if not enemy.is_alive():
-			print("You killed {}!".format(enemy.name))
+			print("You killed the {}!".format(enemy.name))
 		else:
 			print("{} was damaged for {} points.".format(enemy.name, best_weapon.damage))
-			
+		
 	def do_action(self, action, **kwargs):
 		action_method = getattr(self, action.method.__name__)
 		if action_method:
