@@ -71,12 +71,9 @@ class EnemyRoom(MapTile):
 			
 class EmptyForestPath(MapTile):
 	def intro_text(self):
-		return """
-		Another path that seems to circle around to where you started. 
-		It is hard to distiguish what part of the forest you have been through already.
-		"""
+		return """Another path that seems to circle around to where you started.\nIt is hard to distiguish what part of the forest you have been through already."""
 		
-	def modify_player(self, player):
+	def modify_player(self, the_player):
 		pass
 		
 class WaspRoom(EnemyRoom):
@@ -85,13 +82,9 @@ class WaspRoom(EnemyRoom):
 		
 	def intro_text(self):
 		if self.enemy.is_alive():
-			return """
-			A fist sized Wasp emerges from a hole in a tree and attacks!
-			"""
+			return """A fist sized Wasp emerges from a hole in a tree and\nattacks!"""
 		else:
-			return """
-			The Wasp has been squished.
-			"""
+			return """The Wasp has been squished."""
 			
 class FindDaggerRoom(LootRoom):
 	def __init__(self, x, y):
@@ -99,14 +92,9 @@ class FindDaggerRoom(LootRoom):
 		
 	def intro_text(self):
 		if self.item.still_exists():
-			return """
-			A rusted dagger is lodged into the top of a lonely tree stump.
-			You pick it up!
-			"""
+			return """A rusted dagger is lodged into the top of a lonely tree stump.\nYou pick it up!"""
 		else:
-			return """
-			The stump is lonely, leaving you wondering where the dagger came from.
-			"""
+			return """The stump is lonely, leaving you wondering where the dagger came from."""
 
 class Find5GoldRoom(LootRoom):
 	def __init__(self, x, y):
@@ -114,13 +102,9 @@ class Find5GoldRoom(LootRoom):
 		
 	def intro_text(self):
 		if self.item.still_exists():
-			return """
-			A patch of dirt on the ground sparkles brightly. Quickly digging it up, you find a Gold coin!
-			"""
+			return """A patch of dirt on the ground sparkles brightly. Quickly \ndigging it up, you find a Gold coin!"""
 		else:
-			return """
-			The patch of dirt on the ground is now a muddy dark color.
-			"""
+			return """The patch of dirt on the ground is now a muddy dark color."""
 			
 			
 		
@@ -130,21 +114,14 @@ class MantisRoom(EnemyRoom):
 		
 	def intro_text(self):
 		if self.enemy.is_alive():
-			return """
-			A small tree suddenly moves. The roots stick out like long insect legs.
-			You recognize what it is, a Mantis, and it is racing towards you with its arms ready to strike!
-			"""
+			return """A small tree suddenly moves. The roots stick out like long insect legs.\nYou recognize what it is, a Mantis, and it is racing towards you with its arms ready to strike!"""
 		else:
-			return """
-			The Mantis has been defeated.
-			"""
+			return """The Mantis has been defeated."""
 		
 class LeaveForestRoom(MapTile):
 	def intro_text(self):
-		return """
-		You see a bright light in the distance...
-		... it grows are you get closer! It's sunlight shining through a thicket of thorns!
-		"""
+		return """You see a bright light in the distance...\n
+		... it grows are you get closer! It's sunlight shining through a thicket \nof thorns!"""
 		
 	def modify_player(self, player):
 		player.victory = True

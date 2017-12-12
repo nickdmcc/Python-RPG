@@ -49,10 +49,10 @@ def blit_text(surface, text, pos, font, color=pygame.Color('white')):
 		x = pos[0]  # Reset the x.
 		y += word_height  # Start on new row.
 
-#Need to fix loop#########################################################################################################################
+#Need to fix loop
 def action_text_tile(action_list,player):
 	actionloop = False
-	action_string = ["North","South","East","West"]
+	action_string = ["North","South","East","West","Attack","Flee"]
 	largeText = pygame.font.SysFont("Franklin Gothic", 30)
 	TextSurf, TextRect = text_objects("Choose an action:",largeText,red)
 	TextRect.center = (400,330)
@@ -61,31 +61,32 @@ def action_text_tile(action_list,player):
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				quitgame()	
+			if event.type == pygame.MOUSEBUTTONDOWN:
+				actionloop = True
 				
 		for action in action_list:
 			if str(action) in action_string:
 				if "North" == str(action):
-					button("North",410,350,50,50,red,light_red,move,player,action)
+					button("North",410,350,50,50,red,light_red,action_method,player,action)
 				elif "South" == str(action):
-					button("South",410,450,50,50,red,light_red,move,player,action)
+					button("South",410,450,50,50,red,light_red,action_method,player,action)
 				elif "East" == str(action):
-					button("East",460,400,50,50,red,light_red,move,player,action)
+					button("East",460,400,50,50,red,light_red,action_method,player,action)
 				elif "West" == str(action):
-					button("West",360,400,50,50,red,light_red,move,player,action)
+					button("West",360,400,50,50,red,light_red,action_method,player,action)
 				elif "View Inventory" == str(action):
-					button("Inventory",100,100,50,50,red,light_red,player.do_action(game_loop))
+					button("Inventory",100,100,50,50,red,light_red,action_method,player,action)
 				elif "Attack" == str(action):
-					button("Attack",300,500,50,50,red,light_red,player.do_action(game_loop))
+					button("Attack",300,500,50,50,red,light_red,action_method,player,action)
 				elif "Flee" == str(action):
-					button("Flee",500,500,50,50,red,light_red,player.do_action(game_loop))
-		#actionloop = True
+					button("Flee",500,500,50,50,red,light_red,action_method,player,action)
 
 		pygame.display.update()
 		clock.tick(60)
-		
-def move(player,action):
+
+def action_method(player,action):
 	player.do_action(action)
-	actionloop = True
+
 	
 def intro_text_tile(intro_text):
 	screen.fill(white)
@@ -101,7 +102,7 @@ def text_objects(text, font, color):
 def button(msg,x,y,w,h,inactivecolor,activecolor,action=None,*args):
 	mouse = pygame.mouse.get_pos()
 	click = pygame.mouse.get_pressed()
-	
+
 	if x+w > mouse[0] > x and y+h > mouse[1] > y:
 		pygame.draw.rect(screen,activecolor,(x,y,w,h))
 		if click[0] == 1 and action != None:
@@ -119,6 +120,14 @@ def quitgame():
 	pygame.quit()
 	quit()
 
+def get_inventory(player):
+	text = "Inventory"
+	font = pygame.font.SysFont("Franklin Gothic",40)
+	blit_text(screen,text,(40,40),font)
+	
+	for item in player.inventory:
+		break
+	
 def game_intro():
 	intro = False
 	while not intro:
@@ -144,22 +153,23 @@ def game_loop():
 	world.load_tiles()
 	player = Player()
 	room = world.tile_exists(player.location_x, player.location_y)
-	gameExit = False
 	
-	while not gameExit:
+	while player.is_alive() and not player.victory:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				quitgame()
 	
 		#get starting tile for intro text
 		#These lines load the starting room and display the text
+		room = world.tile_exists(player.location_x, player.location_y)
+		print(room)
+		room.modify_player(player) #Why is this line broken ############
+		text = room.intro_text()
+		blit_text(screen,text,(40,40),font)
 		
 		if player.is_alive() and not player.victory:
-			print("Test loop")
-			room = world.tile_exists(player.location_x, player.location_y)
-			room.modify_player(player)
-			text = world.tile_exists(player.location_x, player.location_y).intro_text()
-			blit_text(screen,text,(40,40),font)
+			
+			#put player actions in button format at bottom of the screen
 			available_actions = room.available_actions()
 			action_list = []
 			for action in available_actions:
@@ -167,9 +177,8 @@ def game_loop():
 			action_text_tile(action_list,player)
 			
 		pygame.display.update()
-		clock.tick(60)
-
-		#put player actions in button format at bottom of the screen
+		clock.tick(30)
+		
 		#connect tiles for player to traverse through
 		#end game when player lands on exit tile
 				
