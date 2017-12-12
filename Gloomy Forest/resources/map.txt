@@ -1,0 +1,8 @@
+			LeaveForestRoom		
+	Find5GoldRoom	EmptyForestPath	WaspRoom		
+		EmptyForestPath			
+		EmptyForestPath			
+WaspRoom	EmptyForestPath	StartingRoom	EmptyForestPath	FindDaggerRoom	
+		Find5GoldRoom			
+		EmptyForestPath			
+		MantisRoom			
