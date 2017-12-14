@@ -18,7 +18,7 @@ red = (255,0,0)
 light_red = (180,25,25)
 
 font = pygame.font.SysFont("Franklin Gothic",28)
-FPS = 30
+FPS = 60
 screen = pygame.display.set_mode(SIZE,pygame.RESIZABLE)
 clock = pygame.time.Clock()
 pygame.display.set_caption('Gloomy Forest')
@@ -57,6 +57,7 @@ def action_text_tile(action_list,player):
 	TextSurf, TextRect = text_objects("Choose an action:",largeText,red)
 	TextRect.center = (400,330)
 	screen.blit(TextSurf,TextRect)
+	
 	while not actionloop:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
@@ -67,24 +68,29 @@ def action_text_tile(action_list,player):
 		for action in action_list:
 			if str(action) in action_string:
 				if "North" == str(action):
-					button("North",410,350,50,50,red,light_red,action_method,player,action)
+					north_button = button("North",410,350,50,50,red,light_red,action_method,player,action)
 				elif "South" == str(action):
-					button("South",410,450,50,50,red,light_red,action_method,player,action)
+					south_button = button("South",410,450,50,50,red,light_red,action_method,player,action)
 				elif "East" == str(action):
-					button("East",460,400,50,50,red,light_red,action_method,player,action)
+					east_button = button("East",460,400,50,50,red,light_red,action_method,player,action)
 				elif "West" == str(action):
-					button("West",360,400,50,50,red,light_red,action_method,player,action)
+					west_button = button("West",360,400,50,50,red,light_red,action_method,player,action)
 				elif "View Inventory" == str(action):
 					button("Inventory",100,100,50,50,red,light_red,action_method,player,action)
 				elif "Attack" == str(action):
 					button("Attack",300,500,50,50,red,light_red,action_method,player,action)
 				elif "Flee" == str(action):
 					button("Flee",500,500,50,50,red,light_red,action_method,player,action)
-
-		pygame.display.update()
-		clock.tick(60)
-
+					
+		update()	
+	update()
+	
+def update():
+	pygame.display.update()
+	clock.tick(FPS)
+	
 def action_method(player,action):
+	print(action)
 	player.do_action(action)
 
 	
@@ -163,7 +169,7 @@ def game_loop():
 		#These lines load the starting room and display the text
 		room = world.tile_exists(player.location_x, player.location_y)
 		print(room)
-		room.modify_player(player) #Why is this line broken ############
+		room.modify_player(player)
 		text = room.intro_text()
 		blit_text(screen,text,(40,40),font)
 		
@@ -176,8 +182,7 @@ def game_loop():
 				action_list.append(action)
 			action_text_tile(action_list,player)
 			
-		pygame.display.update()
-		clock.tick(30)
+		update()
 		
 		#connect tiles for player to traverse through
 		#end game when player lands on exit tile
